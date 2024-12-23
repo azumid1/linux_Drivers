@@ -24,25 +24,6 @@
 #define ICM20608_TEMP_OFFSET    0
 #define ICM20608_TEMP_SCALE     326800000
 
-/*
-#define ICM20608_CHAN(_type, _channel2, _index)                    \
-	{                                                             \
-		.type = _type,                                        \
-		.modified = 1,                                        \
-		.channel2 = _channel2,                                \
-		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE), \
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |	      \
-				      BIT(IIO_CHAN_INFO_CALIBBIAS),   \
-		.scan_index = _index,                                 \
-		.scan_type = {                                        \
-				.sign = 's',                          \
-				.realbits = 16,                       \
-				.storagebits = 16,                    \
-				.shift = 0,                           \
-				.endianness = IIO_BE,                 \
-			    },                                       \
-	}
-*/
 #define ICM20608_CHAN(_type, _channel2, _index)                     \
     {                                                               \
         .type = _type,                                              \
