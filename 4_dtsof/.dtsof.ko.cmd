@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/4_dtsof/dtsof.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/4_dtsof/dtsof.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/4_dtsof/dtsof.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/4_dtsof/dtsof.mod.o

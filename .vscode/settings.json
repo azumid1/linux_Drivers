@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "module.h": "c",
+        "errno.h": "c",
+        "ioctl.h": "c",
+        "poll.h": "c",
+        "typeinfo": "c"
+    }
+}

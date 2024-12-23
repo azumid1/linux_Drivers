@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/9_spinlock/spinlock.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/9_spinlock/spinlock.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/9_spinlock/spinlock.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/9_spinlock/spinlock.mod.o

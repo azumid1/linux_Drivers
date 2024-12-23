@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/18_platform/leddrv.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/18_platform/leddrv.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/18_platform/leddrv.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/18_platform/leddrv.mod.o

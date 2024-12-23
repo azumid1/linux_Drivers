@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/15_nobockio.c/noblockio.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/15_nobockio.c/noblockio.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/15_nobockio.c/noblockio.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/15_nobockio.c/noblockio.mod.o

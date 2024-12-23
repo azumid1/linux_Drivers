@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/12_timer/mytimer.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/12_timer/mytimer.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/12_timer/mytimer.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/12_timer/mytimer.mod.o

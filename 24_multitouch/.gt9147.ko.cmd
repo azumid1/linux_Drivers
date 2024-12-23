@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/24_multitouch/gt9147.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/24_multitouch/gt9147.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/24_multitouch/gt9147.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/24_multitouch/gt9147.mod.o

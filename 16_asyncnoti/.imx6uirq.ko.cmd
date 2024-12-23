@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/16_asyncnoti/imx6uirq.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/16_asyncnoti/imx6uirq.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/16_asyncnoti/imx6uirq.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/16_asyncnoti/imx6uirq.mod.o
