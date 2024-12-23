@@ -144,6 +144,7 @@ static const struct iio_chan_spec icm20608_channels[] = {
  * @param - data: 要写入的值
  * @return   :    无
  */	
+
 static void icm20608_write_onereg(struct icm20608_dev *dev, u8 reg, u8 value){
     regmap_write(dev->regmap, reg, value);
 }

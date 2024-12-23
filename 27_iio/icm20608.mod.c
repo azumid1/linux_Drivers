@@ -23,12 +23,15 @@ __attribute__((section("__versions"))) = {
 	{ 0x63961a83, __VMLINUX_SYMBOL_STR(dev_err) },
 	{ 0xfbe0f876, __VMLINUX_SYMBOL_STR(spi_setup) },
 	{ 0x67b52003, __VMLINUX_SYMBOL_STR(regmap_init_spi) },
+	{ 0x354ad55, __VMLINUX_SYMBOL_STR(iio_device_register) },
 	{ 0xf3bb59b5, __VMLINUX_SYMBOL_STR(__mutex_init) },
+	{ 0x64ef66ae, __VMLINUX_SYMBOL_STR(devm_iio_device_alloc) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
 	{ 0x12b8611, __VMLINUX_SYMBOL_STR(regmap_read) },
 	{ 0xfef3f0ab, __VMLINUX_SYMBOL_STR(regmap_write) },
 	{ 0x8e865d3c, __VMLINUX_SYMBOL_STR(arm_delay_ops) },
 	{ 0xefd6cf06, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr0) },
+	{ 0x9b6f58be, __VMLINUX_SYMBOL_STR(iio_device_unregister) },
 	{ 0x5bc6c4e1, __VMLINUX_SYMBOL_STR(regmap_exit) },
 };
 
