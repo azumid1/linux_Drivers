@@ -24,27 +24,42 @@
 #define ICM20608_TEMP_OFFSET    0
 #define ICM20608_TEMP_SCALE     326800000
 
-#define ICM20608_CHAN(_type, _channel2, _index) \
-    {
-        .type = _type,  \
-        .modified = 1,  \
-        .channel2 = _channel2,  \
-        .info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),   \
-        .info_mask_separate = BIT(IIO_CHAN_INFO_RAW) | BIT(IIO_CHAN_INFO_CALIBBIAS),    \
-        .scan_index = _index,\
-        .scan_type = {  \
-            .sign = 's',    \
-            .realbit = 16,  \
-            .shift = 0,     \
-            .endianness = IIO_BE,   \
-        },
+/*
+#define ICM20608_CHAN(_type, _channel2, _index)                    \
+	{                                                             \
+		.type = _type,                                        \
+		.modified = 1,                                        \
+		.channel2 = _channel2,                                \
+		.info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE), \
+		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |	      \
+				      BIT(IIO_CHAN_INFO_CALIBBIAS),   \
+		.scan_index = _index,                                 \
+		.scan_type = {                                        \
+				.sign = 's',                          \
+				.realbits = 16,                       \
+				.storagebits = 16,                    \
+				.shift = 0,                           \
+				.endianness = IIO_BE,                 \
+			    },                                       \
+	}
+*/
+#define ICM20608_CHAN(_type, _channel2, _index)                     \
+    {                                                               \
+        .type = _type,                                              \
+        .modified = 1,                                              \
+        .channel2 = _channel2,                                      \
+        .info_mask_shared_by_type = BIT(IIO_CHAN_INFO_SCALE),       \
+        .info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |	            \
+				      BIT(IIO_CHAN_INFO_CALIBBIAS),                 \
+		.scan_index = _index,                                       \
+		.scan_type = {                                              \
+				.sign = 's',                                        \
+				.realbits = 16,                                     \
+				.storagebits = 16,                                  \
+				.shift = 0,                                         \
+				.endianness = IIO_BE,                               \
+			    },                                                  \
     }
-
-
-/* icm20608 通道 */
-static const struct iio_chan_spec icm20608_channels[] = {
-
-};
 
 /* 设备结构体 */
 struct icm20608_dev {
@@ -63,6 +78,62 @@ static struct iio_info icm20608_info = {
     .read_raw = icm20608_read_raw,
     .write_raw = icm20608_write_raw,
     .write_raw_get_fmt = &icm20608_write_raw_get_fmt,   /* 用户空间写数据格式 */
+};
+
+/* 
+ * icm20608加速度计分辨率，对应2、4、8、16 计算方法：
+ * 以正负2g量程为例，4/2^16=0.000061035，扩大1000000000倍，就是61035
+ */
+static const int accel_scale_icm20608[] = {61035, 122070, 244140, 488281};
+
+/*
+ * 陀螺仪分辨率吧，对应250,500,1000,2000, 计算方法：
+ * 以正负250度量程为例，500/2^16=0.06719，扩大1000000倍，就是7269
+ */
+static const int gyro_scale_icm20608[] = {7629, 15258, 30517, 61035};
+
+/* 
+ * ICM20608的扫描元素，3轴加速度计、
+ * 3轴陀螺仪、1路温度传感器，1路时间戳 
+ */
+enum imv_icm20608_scan {
+    INV_ICM20608_SCAN_ACCL_X,
+    INV_ICM20608_SCAN_ACCL_Y,
+    INV_ICM20608_SCAN_ACCL_Z,
+    INV_ICM20608_SCAN_TEMP,
+    INV_ICM20608_SCAN_GYRO_X,
+    INV_ICM20608_SCAN_GYRO_Y,
+    INV_ICM20608_SCAN_GYRO_Z,
+    INV_ICM20608_SCAN_TIMESTAMP,
+};
+
+/* icm20608通道，1路温度通道，3路加速度计，3路陀螺仪 */
+static const struct iio_chan_spec icm20608_channels[] = {
+    /* 温度通道 */
+    {
+        .type = IIO_TEMP,
+        .info_mask_separate = BIT(IIO_CHAN_INFO_RAW)
+                            | BIT(IIO_CHAN_INFO_OFFSET)
+                            | BIT(IIO_CHAN_INFO_SCALE),
+        .scan_index = INV_ICM20608_SCAN_TEMP,
+        .scan_type = {
+            .sign = 's',
+            .realbits = 16,
+            .storagebits = 16,
+            .shift = 0,
+            .endianness = IIO_BE,
+        },
+    },
+
+    ICM20608_CHAN(IIO_ANGL_VEL, IIO_MOD_X, INV_ICM20608_SCAN_GYRO_X),  /* 陀螺仪x轴 */
+    ICM20608_CHAN(IIO_ANGL_VEL, IIO_MOD_Y, INV_ICM20608_SCAN_GYRO_Y),   /* 陀螺仪y轴 */
+    ICM20608_CHAN(IIO_ANGL_VEL, IIO_MOD_Z, INV_ICM20608_SCAN_GYRO_Z),   /* 陀螺仪z轴 */
+
+    /* 加速度x,y,z轴 */
+    ICM20608_CHAN(IIO_ACCEL, IIO_MOD_X, INV_ICM20608_SCAN_ACCL_X),
+    ICM20608_CHAN(IIO_ACCEL, IIO_MOD_Y, INV_ICM20608_SCAN_ACCL_Y),
+    ICM20608_CHAN(IIO_ACCEL, IIO_MOD_Z, INV_ICM20608_SCAN_ACCL_Z),
+
 };
 
 /*
