@@ -20,9 +20,9 @@ __attribute__((section("__versions"))) = {
 	{ 0xfa985410, __VMLINUX_SYMBOL_STR(module_layout) },
 	{ 0x87a740ad, __VMLINUX_SYMBOL_STR(driver_unregister) },
 	{ 0x34ce7e95, __VMLINUX_SYMBOL_STR(spi_register_driver) },
-	{ 0x63961a83, __VMLINUX_SYMBOL_STR(dev_err) },
 	{ 0xfbe0f876, __VMLINUX_SYMBOL_STR(spi_setup) },
 	{ 0x67b52003, __VMLINUX_SYMBOL_STR(regmap_init_spi) },
+	{ 0x63961a83, __VMLINUX_SYMBOL_STR(dev_err) },
 	{ 0x354ad55, __VMLINUX_SYMBOL_STR(iio_device_register) },
 	{ 0xf3bb59b5, __VMLINUX_SYMBOL_STR(__mutex_init) },
 	{ 0x64ef66ae, __VMLINUX_SYMBOL_STR(devm_iio_device_alloc) },
@@ -41,4 +41,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "083A3586AB7A9E7CE2AFF09");
+MODULE_INFO(srcversion, "06DB5B6B44F5C49A0644CC2");

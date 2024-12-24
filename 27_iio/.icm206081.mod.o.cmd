@@ -3,6 +3,7 @@ cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm206081.mod.o := arm-linux
 source_/home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm206081.mod.o := /home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm206081.mod.c
 
 deps_/home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm206081.mod.o := \
+    $(wildcard include/config/module/unload.h) \
   include/linux/module.h \
     $(wildcard include/config/sysfs.h) \
     $(wildcard include/config/modules.h) \
@@ -16,7 +17,6 @@ deps_/home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm206081.mod.o := \
     $(wildcard include/config/event/tracing.h) \
     $(wildcard include/config/ftrace/mcount/record.h) \
     $(wildcard include/config/livepatch.h) \
-    $(wildcard include/config/module/unload.h) \
     $(wildcard include/config/constructors.h) \
     $(wildcard include/config/debug/set/module/ronx.h) \
   include/linux/list.h \

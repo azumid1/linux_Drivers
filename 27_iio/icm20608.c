@@ -185,13 +185,13 @@ static int icm20608_probe(struct spi_device *spi){
     if(!indio_dev){
         return -ENOMEM;
     }
-
+    printk("step1!\r\n");
     /* 2.获取icm20608_dev结构体的地址 */
     dev = iio_priv(indio_dev);
     dev->spi = spi;
     spi_set_drvdata(spi, indio_dev);    /* 将 indio_dev 设置为 spi_dev 的 driver_data */
     mutex_init(&dev->lock);
-
+    printk("step2!\r\n");
     // /* 3.iio_dev 的其他成员变量 */
     // indio_dev->dev.parent = &spi->dev;
     // indio_dev->info = &icm20608_info;
@@ -207,7 +207,7 @@ static int icm20608_probe(struct spi_device *spi){
         dev_err(&spi->dev, "iio_device_register failed!\r\n");
         goto err_iio_register;
     }
-
+    printk("step4!\r\n");
     /* 5.初始化regmap_config */
     dev->regmap_config.reg_bits = 8;    /* 寄存器地址长度为8 */
     dev->regmap_config.val_bits = 8;   /* 值长度为8 */
@@ -219,11 +219,11 @@ static int icm20608_probe(struct spi_device *spi){
         ret = PTR_ERR(dev->regmap);
         goto err_regmap_init;
     }
-
+    printk("step6!\r\n");
     /* 7.初始化spi_device */
     spi->mode = SPI_MODE_0;     /* MODE0, CPOL=0,CPHA=0 */
     spi_setup(spi);
-
+    printk("step7!\r\n");
     /* 初始化ICM20608內部的寄存器 */
     icm20608_reginit(dev);
     return 0;
