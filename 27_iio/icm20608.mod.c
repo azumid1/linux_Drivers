@@ -30,9 +30,12 @@ __attribute__((section("__versions"))) = {
 	{ 0x12b8611, __VMLINUX_SYMBOL_STR(regmap_read) },
 	{ 0xfef3f0ab, __VMLINUX_SYMBOL_STR(regmap_write) },
 	{ 0x8e865d3c, __VMLINUX_SYMBOL_STR(arm_delay_ops) },
-	{ 0xefd6cf06, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr0) },
+	{ 0x49fcab7e, __VMLINUX_SYMBOL_STR(mutex_unlock) },
+	{ 0x7267eeee, __VMLINUX_SYMBOL_STR(mutex_lock) },
+	{ 0x6dc6de6d, __VMLINUX_SYMBOL_STR(regmap_bulk_read) },
 	{ 0x9b6f58be, __VMLINUX_SYMBOL_STR(iio_device_unregister) },
 	{ 0x5bc6c4e1, __VMLINUX_SYMBOL_STR(regmap_exit) },
+	{ 0xefd6cf06, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr0) },
 };
 
 static const char __module_depends[]
@@ -41,4 +44,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "CA54658502CBB6155408696");
+MODULE_INFO(srcversion, "C5AEAE1DD67D94DDD1D7ACA");

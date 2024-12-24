@@ -50,12 +50,6 @@ struct icm20608_dev {
     struct mutex lock;
 };
 
-/**
- * iio_info结构体
-*/
-static struct iio_info icm20608_info = {
-    .driver_module = THIS_MODULE,
-};
 
 /* 
  * icm20608加速度计分辨率，对应2、4、8、16 计算方法：
@@ -164,6 +158,160 @@ void icm20608_reginit(struct icm20608_dev *dev){
 	icm20608_write_onereg(dev, ICM20_LP_MODE_CFG, 0x00); 	/* 关闭低功耗 				*/
 	icm20608_write_onereg(dev, ICM20_INT_ENABLE, 0x01);		/* 使能FIFO溢出以及数据就绪中断	*/
 }
+
+/*
+  * @description  	: 读取ICM20608传感器数据，可以用于陀螺仪、加速度计、温度的读取
+  * @param - dev	: icm20608设备 
+  * @param - reg  	: 要读取的通道寄存器首地址。
+  * @param - anix  	: 需要读取的通道，比如X，Y，Z。
+  * @param - val  	: 保存读取到的值。
+  * @return			: 0，成功；其他值，错误
+  */
+ static int icm20608_sensor_show(struct icm20608_dev *dev, int reg,
+				   int axis, int *val)
+{
+    int ind, result;
+    __be16 d;
+
+    /**
+     * 这里对下面的代码做一下解释
+     * 首先，axis代表的channel2，就是要读的是X Y Z 三轴中的一个
+     * (axis - IIO_MOD_X) * 2 这是在计算要读的寄存器的首地址，为什么要*2呢？
+     * 是因为icm20608的一个轴的数据是存放在两个寄存器里的，所以要想读取下一个轴的信息，
+     * 就要向后跳两个寄存器。
+     * 然后再使用regmap_bulk_read这个方法读取两个字节的内容，就得到对应的轴的数据了！！！
+    */
+    ind = (axis - IIO_MOD_X) * 2;
+    result = regmap_bulk_read(dev->regmap, reg+ind, (u8 *)&d, 2);
+    if(result){
+        return -EINVAL;
+    }
+    *val = (short)be16_to_cpup(&d);
+    return IIO_VAL_INT;
+}
+
+/*
+  * @description  		: 读取ICM20608陀螺仪、加速度计、温度通道值
+  * @param - indio_dev	: iio设备 
+  * @param - chan  		: 通道。
+  * @param - val  		: 保存读取到的通道值。
+  * @return				: 0，成功；其他值，错误
+  */
+ static int icm20608_read_channel_data(struct iio_dev *indio_dev, struct iio_chan_spec const * chan,
+                                        int *val)
+{
+    struct icm20608_dev *dev = iio_priv(indio_dev);
+    int ret = 0;
+    switch(chan->type){
+        case IIO_ANGL_VEL:  /* 读取陀螺仪数据 */
+            ret = icm20608_sensor_show(dev, ICM20_GYRO_XOUT_H, chan->channel2, val);
+            break;
+        case IIO_ACCEL:     /* 读取加速度计数据 */
+            ret = icm20608_sensor_show(dev, ICM20_ACCEL_XOUT_H, chan->channel2, val);
+            break;
+        
+        case IIO_TEMP:      /* 读取温度 */
+            ret = icm20608_sensor_show(dev, ICM20_TEMP_OUT_H, IIO_MOD_X, val);
+            break;
+        default:
+            ret = -EINVAL;
+            break;
+    } 
+    return ret;  
+
+}
+
+static int icm20608_read_raw(struct iio_dev *indio_dev,
+			   struct iio_chan_spec const *chan,
+			   int *val, int *val2, long mask)
+{
+    struct icm20608_dev *dev = iio_priv(indio_dev);
+    int ret = 0;
+    unsigned char regdata = 0;
+    
+    /* 区分读取的文件类型，是raw，scale，还是offset等 */
+    switch(mask){
+        case IIO_CHAN_INFO_RAW:
+            mutex_lock(&dev->lock);
+            ret = icm20608_read_channel_data(indio_dev, chan, val);
+            mutex_unlock(&dev->lock);
+            return ret;
+        case IIO_CHAN_INFO_SCALE:
+            switch(chan->type){
+                case IIO_ANGL_VEL:
+                    mutex_lock(&dev->lock);
+                    regdata = (icm20608_read_onereg(dev, ICM20_GYRO_CONFIG) & 0x18) >> 3;
+                    *val = 0;
+                    *val2 = gyro_scale_icm20608[regdata];
+                    mutex_unlock(&dev->lock);
+                    return IIO_VAL_INT_PLUS_MICRO;   /* 值为val+val2/1000000 */
+                case IIO_ACCEL:
+                    mutex_lock(&dev->lock);
+                    regdata = (icm20608_read_onereg(dev, ICM20_ACCEL_CONFIG) & 0x18) >>3;
+                    *val = 0;
+                    *val2 = accel_scale_icm20608[regdata];
+                    mutex_unlock(&dev->lock);
+                    return IIO_VAL_INT_PLUS_NANO;  /* 值为val+val2/1000000000 */ 
+                case IIO_TEMP:
+                    /* 温度的量程是固定的 */
+                    *val = ICM20608_TEMP_SCALE / 1000000;
+                    *val2 = ICM20608_TEMP_SCALE % 1000000;
+                    return IIO_VAL_INT_PLUS_MICRO;  /* 值为val+val2/1000000 */
+                default:
+                    return -EINVAL;
+            }
+            return ret;
+        case IIO_CHAN_INFO_OFFSET:  /* ICM20608温度传感器offset值 */
+            switch(chan->type){
+                case IIO_TEMP:
+                    *val = ICM20608_TEMP_OFFSET;
+                    return IIO_VAL_INT;
+                default:
+                    return -EINVAL;
+            }
+            return ret;
+        case IIO_CHAN_INFO_CALIBBIAS:   /* ICM20608加速度计和陀螺仪校准值 */
+            switch(chan->type){
+                case IIO_ANGL_VEL:  /* 陀螺仪的校准值 */
+                    mutex_lock(&dev->lock);
+                    ret = icm20608_sensor_show(dev, ICM20_XG_OFFS_USRH, chan->channel2, val);
+                    mutex_unlock(&dev->lock);
+                    return ret;
+                case IIO_ACCEL: /* 加速度计的校准值 */
+                    mutex_lock(&dev->lock);
+                    ret = icm20608_sensor_show(dev, ICM20_XA_OFFSET_H, chan->channel2, val);
+                    mutex_unlock(&dev->lock);
+                    return ret;
+                default:
+                    return -EINVAL;
+            }
+        default:
+            return -EINVAL;
+    }
+}
+
+static int icm20608_write_raw(struct iio_dev *indio_dev,
+			    struct iio_chan_spec const *chan,
+			    int val, int val2, long mask)
+{
+    return 0;
+}
+
+static int icm20608_write_raw_get_fmt(struct iio_dev *indio_dev,
+				 struct iio_chan_spec const *chan, long mask)
+{
+    return 0;
+}
+/**
+ * iio_info结构体
+*/
+static struct iio_info icm20608_info = {
+    .driver_module      = THIS_MODULE,
+    .read_raw           = icm20608_read_raw,
+    .write_raw          = icm20608_write_raw,
+    .write_raw_get_fmt  = icm20608_write_raw_get_fmt,      /* 用户空间写数据 */
+};
+
 
 /*
   * @description    : spi驱动的probe函数，当驱动与
