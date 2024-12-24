@@ -53,12 +53,9 @@ struct icm20608_dev {
 /**
  * iio_info结构体
 */
-// static struct iio_info icm20608_info = {
-//     .driver_module = THIS_MODULE,
-//     .read_raw = icm20608_read_raw,
-//     .write_raw = icm20608_write_raw,
-//     .write_raw_get_fmt = &icm20608_write_raw_get_fmt,   /* 用户空间写数据格式 */
-// };
+static struct iio_info icm20608_info = {
+    .driver_module = THIS_MODULE,
+};
 
 /* 
  * icm20608加速度计分辨率，对应2、4、8、16 计算方法：
@@ -192,13 +189,13 @@ static int icm20608_probe(struct spi_device *spi){
     spi_set_drvdata(spi, indio_dev);    /* 将 indio_dev 设置为 spi_dev 的 driver_data */
     mutex_init(&dev->lock);
     printk("step2!\r\n");
-    // /* 3.iio_dev 的其他成员变量 */
-    // indio_dev->dev.parent = &spi->dev;
-    // indio_dev->info = &icm20608_info;
-    // indio_dev->name = ICM20608_NAME;
-    // indio_dev->modes = INDIO_DIRECT_MODE;   /* 直接模式，提供 sysfs 接口 */
-    // indio_dev->channels = icm20608_channels;
-    // indio_dev->num_channels = ARRAY_SIZE(icm20608_channels);
+    /* 3.iio_dev 的其他成员变量 */
+    indio_dev->dev.parent = &spi->dev;
+    indio_dev->info = &icm20608_info;
+    indio_dev->name = ICM20608_NAME;
+    indio_dev->modes = INDIO_DIRECT_MODE;   /* 直接模式，提供 sysfs 接口 */
+    indio_dev->channels = icm20608_channels;
+    indio_dev->num_channels = ARRAY_SIZE(icm20608_channels);
 
 
     /* 4.注册iio_dev */
