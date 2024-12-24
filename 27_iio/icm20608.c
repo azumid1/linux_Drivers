@@ -45,7 +45,6 @@
 /* 设备结构体 */
 struct icm20608_dev {
     struct spi_device *spi;
-    struct mutex mutex;
     struct regmap *regmap;
     struct regmap_config regmap_config;
     struct mutex lock;
