@@ -27,15 +27,16 @@ __attribute__((section("__versions"))) = {
 	{ 0xf3bb59b5, __VMLINUX_SYMBOL_STR(__mutex_init) },
 	{ 0x64ef66ae, __VMLINUX_SYMBOL_STR(devm_iio_device_alloc) },
 	{ 0x27e1a049, __VMLINUX_SYMBOL_STR(printk) },
-	{ 0x12b8611, __VMLINUX_SYMBOL_STR(regmap_read) },
-	{ 0xfef3f0ab, __VMLINUX_SYMBOL_STR(regmap_write) },
 	{ 0x8e865d3c, __VMLINUX_SYMBOL_STR(arm_delay_ops) },
+	{ 0x12b8611, __VMLINUX_SYMBOL_STR(regmap_read) },
+	{ 0x6dc6de6d, __VMLINUX_SYMBOL_STR(regmap_bulk_read) },
+	{ 0xfef3f0ab, __VMLINUX_SYMBOL_STR(regmap_write) },
 	{ 0x49fcab7e, __VMLINUX_SYMBOL_STR(mutex_unlock) },
 	{ 0x7267eeee, __VMLINUX_SYMBOL_STR(mutex_lock) },
-	{ 0x6dc6de6d, __VMLINUX_SYMBOL_STR(regmap_bulk_read) },
+	{ 0x5c0ed718, __VMLINUX_SYMBOL_STR(regmap_bulk_write) },
+	{ 0xefd6cf06, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr0) },
 	{ 0x9b6f58be, __VMLINUX_SYMBOL_STR(iio_device_unregister) },
 	{ 0x5bc6c4e1, __VMLINUX_SYMBOL_STR(regmap_exit) },
-	{ 0xefd6cf06, __VMLINUX_SYMBOL_STR(__aeabi_unwind_cpp_pr0) },
 };
 
 static const char __module_depends[]
@@ -44,4 +45,4 @@ __attribute__((section(".modinfo"))) =
 "depends=";
 
 
-MODULE_INFO(srcversion, "C5AEAE1DD67D94DDD1D7ACA");
+MODULE_INFO(srcversion, "8E7B2AFCFF617DB2220E55F");
