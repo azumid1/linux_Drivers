@@ -4,6 +4,7 @@
         "errno.h": "c",
         "ioctl.h": "c",
         "poll.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "ap3216creg.h": "c"
     }
 }

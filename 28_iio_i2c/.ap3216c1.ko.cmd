@@ -1,1 +1,0 @@
-cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/28_iio_i2c/ap3216c1.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/28_iio_i2c/ap3216c1.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/28_iio_i2c/ap3216c1.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/28_iio_i2c/ap3216c1.mod.o

@@ -102,6 +102,7 @@ static const struct iio_chan_spec ap3216c_channels[] = {
         .channel2 = IIO_MOD_LIGHT_IR,
         .address = AP3216C_IRDATALOW,
         .info_mask_separate = BIT(IIO_CHAN_INFO_RAW),
+        .scan_index = AP3216C_IR,
         .scan_type = {
             .sign = 'u',
             .realbits = 10,
