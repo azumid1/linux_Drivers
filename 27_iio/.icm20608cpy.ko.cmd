@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm20608cpy.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm20608cpy.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm20608cpy.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/27_iio/icm20608cpy.mod.o
