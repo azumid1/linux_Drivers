@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/camera/ov5640.ko := arm-poky-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/camera/ov5640.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/camera/ov5640.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/camera/ov5640.mod.o

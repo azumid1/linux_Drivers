@@ -40,16 +40,7 @@ int main(int argc, char* argv[])
     fd = open(filename, O_RDWR);
     if(fd < 0){printf("Can't open file %s\r\n",filename); return -1;}
     
-    // while(1){
-    //     ret = read(fd, &data, sizeof(data));
-    //     if(ret < 0){
-    //         /* 数据读取错误或无效 */
-    //     } else{
-    //         if(data){
-    //             printf("key value = %#X\r\n",data);
-    //         }
-    //     }
-    // }
+
     /* 设置信号处理函数 */
     signal(SIGIO, sigio_signal_func);
 

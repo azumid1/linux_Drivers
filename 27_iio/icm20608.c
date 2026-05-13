@@ -219,7 +219,7 @@ static int icm20608_sensor_set(struct icm20608_dev *dev, int reg,
   * @param - val  		: 保存读取到的通道值。
   * @return				: 0，成功；其他值，错误
   */
- static int icm20608_read_channel_data(struct iio_dev *indio_dev, struct iio_chan_spec const * chan,
+static int icm20608_read_channel_data(struct iio_dev *indio_dev, struct iio_chan_spec const * chan,
                                         int *val)
 {
     struct icm20608_dev *dev = iio_priv(indio_dev);

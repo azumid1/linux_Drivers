@@ -243,7 +243,7 @@ static struct i2c_driver ap3216c_driver = {
         .name = "ap3216c",
         .of_match_table = ap3216c_of_match,
     },
-    id_table = ap3216c_id,
+    .id_table = ap3216c_id,
 }
 
 

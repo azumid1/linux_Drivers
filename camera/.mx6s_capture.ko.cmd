@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/linux/IMX6ULL/linux_Drivers/camera/mx6s_capture.ko := arm-poky-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/linux/IMX6ULL/linux_Drivers/camera/mx6s_capture.ko /home/ubuntu/linux/IMX6ULL/linux_Drivers/camera/mx6s_capture.o /home/ubuntu/linux/IMX6ULL/linux_Drivers/camera/mx6s_capture.mod.o
