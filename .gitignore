@@ -1,0 +1,42 @@
+# .gitignore for Linux kernel driver project
+
+# Kernel/module build artifacts
+*.o
+*.ko
+*.mod.c
+*.ko.cmd
+*.o.cmd
+*.mod
+*.symvers
+Module.symvers
+modules.order
+*.cmd
+*.d
+.tmp_versions/
+
+# Build directories and outputs
+build/
+out/
+obj/
+*.elf
+*.bin
+
+# Editor and OS temp files
+*~
+*.swp
+*.swo
+*.bak
+.DS_Store
+Thumbs.db
+
+# IDE settings
+.vscode/
+.idea/
+*.iml
+
+# Logs and misc temp files
+*.log
+*.tmp
+
+# Keep source files and Makefiles tracked
+!Makefile
